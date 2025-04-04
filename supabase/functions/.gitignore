@@ -1,0 +1,15 @@
+# Supabase
+.env
+.env.*
+!.env.example
+
+# Build output
+dist/
+build/
+*.js.map
+
+# Logs
+*.log*
+
+# Dependencies
+node_modules/
