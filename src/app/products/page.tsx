@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import productData from "@/data/products";
 
@@ -106,7 +106,8 @@ const productCategories = [
 const products = productData;
 
 
-export default function ProductsPage() {
+// Create a client component that uses the search params
+function ProductsContent() {
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get("category");
   const mainCategoryParam = searchParams.get("main");
@@ -577,5 +578,14 @@ export default function ProductsPage() {
         </div>
       )}
     </>
+  );
+}
+
+// Export the main page component with Suspense
+export default function ProductsPage() {
+  return (
+    <Suspense fallback={<div className="p-12 text-center">Loading products...</div>}>
+      <ProductsContent />
+    </Suspense>
   );
 }

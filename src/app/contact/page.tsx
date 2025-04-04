@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { submitContactForm } from "../actions/contact";
 
-export default function ContactPage() {
+// Content component that uses search params
+function ContactContent() {
   const searchParams = useSearchParams();
   const productParam = searchParams.get("product");
 
@@ -382,5 +383,14 @@ export default function ContactPage() {
         </div>
       </section>
     </>
+  );
+}
+
+// Export the main page component with Suspense
+export default function ContactPage() {
+  return (
+    <Suspense fallback={<div className="p-12 text-center">Loading contact form...</div>}>
+      <ContactContent />
+    </Suspense>
   );
 }
