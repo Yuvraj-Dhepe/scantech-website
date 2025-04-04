@@ -24,76 +24,109 @@ serve(async (req) => {
     )
 
     // Get the submission ID from the request
-    const { id } = await req.json()
+    const body = await req.json()
+    console.log('Request body:', body)
+
+    const { id } = body
+    console.log('Submission ID:', id)
 
     // Fetch the submission details
+    console.log('Fetching submission details from database...')
     const { data: submission, error } = await supabaseClient
       .from('contact_submissions')
       .select('*')
       .eq('id', id)
       .single()
 
-    if (error) throw error
+    if (error) {
+      console.error('Error fetching submission:', error)
+      throw error
+    }
+
+    console.log('Submission details:', submission)
 
     // Send email notification using Mailjet
+    console.log('Preparing to send email notification...');
     const mailjetUrl = 'https://api.mailjet.com/v3.1/send';
     const mailjetApiKey = Deno.env.get('MAILJET_API_KEY');
     const mailjetSecretKey = Deno.env.get('MAILJET_SECRET_KEY');
+
+    console.log('Mailjet API Key available:', !!mailjetApiKey);
+    console.log('Mailjet Secret Key available:', !!mailjetSecretKey);
 
     if (!mailjetApiKey || !mailjetSecretKey) {
       throw new Error('Mailjet API credentials are not configured');
     }
 
     const auth = btoa(`${mailjetApiKey}:${mailjetSecretKey}`);
+    console.log('Auth header created successfully');
 
-    const emailResponse = await fetch(mailjetUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Basic ${auth}`
-      },
-      body: JSON.stringify({
-        Messages: [
-          {
-            From: {
-              Email: "yuvi.phone1@gmail.com", // Use your verified email address
-              Name: "Scantech Website"
-            },
-            To: [
-              {
-                Email: "yuvi.dhepe21@gmail.com",
-                Name: "Scantech Sales"
-              }
-            ],
-            Subject: `New Contact Form Submission: ${submission.product || 'General Inquiry'}`,
-            HTMLPart: `
-              <h1>New Contact Form Submission</h1>
-              <p><strong>Name:</strong> ${submission.name}</p>
-              <p><strong>Email:</strong> ${submission.email}</p>
-              <p><strong>Phone:</strong> ${submission.phone || 'Not provided'}</p>
-              <p><strong>Company:</strong> ${submission.company || 'Not provided'}</p>
-              <p><strong>Product:</strong> ${submission.product || 'Not specified'}</p>
-              <p><strong>Message:</strong> ${submission.message}</p>
-              <p><strong>Submitted at:</strong> ${new Date(submission.created_at).toLocaleString()}</p>
-            `,
-            TextPart: `
-              New Contact Form Submission
+    // Prepare email content
+    const emailPayload = {
+      Messages: [
+        {
+          From: {
+            Email: "yuvi.phone1@gmail.com", // Use your verified email address
+            Name: "Scantech Website"
+          },
+          To: [
+            {
+              Email: "yuvi.dhepe21@gmail.com",
+              Name: "Scantech Sales"
+            }
+          ],
+          Subject: `New Contact Form Submission: ${submission.product || 'General Inquiry'}`,
+          HTMLPart: `
+            <h1>New Contact Form Submission</h1>
+            <p><strong>Name:</strong> ${submission.name}</p>
+            <p><strong>Email:</strong> ${submission.email}</p>
+            <p><strong>Phone:</strong> ${submission.phone || 'Not provided'}</p>
+            <p><strong>Company:</strong> ${submission.company || 'Not provided'}</p>
+            <p><strong>Product:</strong> ${submission.product || 'Not specified'}</p>
+            <p><strong>Message:</strong> ${submission.message}</p>
+            <p><strong>Submitted at:</strong> ${new Date(submission.created_at).toLocaleString()}</p>
+          `,
+          TextPart: `
+            New Contact Form Submission
 
-              Name: ${submission.name}
-              Email: ${submission.email}
-              Phone: ${submission.phone || 'Not provided'}
-              Company: ${submission.company || 'Not provided'}
-              Product: ${submission.product || 'Not specified'}
-              Message: ${submission.message}
-              Submitted at: ${new Date(submission.created_at).toLocaleString()}
-            `
-          }
-        ]
-      })
-    });
+            Name: ${submission.name}
+            Email: ${submission.email}
+            Phone: ${submission.phone || 'Not provided'}
+            Company: ${submission.company || 'Not provided'}
+            Product: ${submission.product || 'Not specified'}
+            Message: ${submission.message}
+            Submitted at: ${new Date(submission.created_at).toLocaleString()}
+          `
+        }
+      ]
+    };
 
-    const emailResult = await emailResponse.json();
-    console.log('Email sending result:', emailResult);
+    console.log('Email payload prepared');
+
+    try {
+      console.log('Sending email via Mailjet...');
+      const emailResponse = await fetch(mailjetUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Basic ${auth}`
+        },
+        body: JSON.stringify(emailPayload)
+      });
+
+      console.log('Mailjet API response status:', emailResponse.status);
+
+      const emailResult = await emailResponse.json();
+      console.log('Email sending result:', emailResult);
+
+      if (!emailResponse.ok) {
+        console.error('Mailjet API error:', emailResult);
+        throw new Error(`Mailjet API error: ${JSON.stringify(emailResult)}`);
+      }
+    } catch (emailError) {
+      console.error('Error sending email:', emailError);
+      throw emailError;
+    }
 
     // Log the submission
     console.log('New submission:', submission);
@@ -108,8 +141,30 @@ serve(async (req) => {
   } catch (error) {
     console.error('Error processing request:', error)
 
+    // Improved error handling with more details
+    let errorMessage = 'Unknown error';
+    let errorDetails = {};
+
+    if (error instanceof Error) {
+      errorMessage = error.message;
+      errorDetails = { name: error.name, stack: error.stack };
+    } else if (typeof error === 'object' && error !== null) {
+      try {
+        errorMessage = JSON.stringify(error);
+        errorDetails = error;
+      } catch (e) {
+        errorMessage = 'Error object could not be stringified';
+      }
+    } else {
+      errorMessage = String(error);
+    }
+
     return new Response(
-      JSON.stringify({ error: error instanceof Error ? error.message : String(error) }),
+      JSON.stringify({
+        error: errorMessage,
+        details: errorDetails,
+        timestamp: new Date().toISOString()
+      }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         status: 400,
