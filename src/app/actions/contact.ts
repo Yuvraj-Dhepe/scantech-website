@@ -3,6 +3,9 @@
 import { supabase } from '@/lib/supabase';
 import logger from '@/lib/logger';
 
+// Define the return type for the form submission
+type ContactFormResult = { success: true; data: any } | { success: false; error: string | any };
+
 export async function submitContactForm(formData: {
   name: string;
   email: string;
@@ -10,7 +13,7 @@ export async function submitContactForm(formData: {
   company: string;
   product: string;
   message: string;
-}) {
+}): Promise<ContactFormResult> {
   try {
     // Log the Supabase URL and key to verify they're being loaded correctly
     logger.info('Contact form submission started');

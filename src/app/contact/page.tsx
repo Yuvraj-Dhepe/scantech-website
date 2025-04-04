@@ -5,6 +5,9 @@ import { useSearchParams } from "next/navigation";
 import { submitContactForm } from "../actions/contact";
 import logger from "@/lib/logger";
 
+// Define the result type from the server action
+type ContactFormResult = { success: true; data: any } | { success: false; error: string | any };
+
 // Content component that uses search params
 function ContactContent() {
   const searchParams = useSearchParams();
@@ -51,7 +54,7 @@ function ContactContent() {
       logger.info('Contact form submission initiated');
       logger.debug('Submitting form data:', { ...formData, message: formData.message.substring(0, 20) + '...' });
 
-      const result = await submitContactForm(formData);
+      const result = await submitContactForm(formData) as ContactFormResult;
       logger.debug('Form submission result:', result);
 
       if (result.success) {
