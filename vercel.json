@@ -1,5 +1,5 @@
 {
-  "buildCommand": "git lfs fetch --all && git lfs checkout && npm run build",
+  "buildCommand": "git lfs install && (git lfs fetch --all || true) && (git lfs checkout || true) && npm run build",
   "outputDirectory": ".next",
   "framework": "nextjs",
   "git": {
