@@ -11,3 +11,18 @@
 # For large file uploads
 [build.processing.large-media]
   enabled = true
+
+# Production context: all deploys from the main/master branch
+[context.production]
+  command = "npm run build"
+  publish = ".next"
+
+# Branch deploy context: all deploys that are not from the production branch
+[context.branch-deploy]
+  command = "echo 'Branch deploys not enabled'"
+  ignore = "true"
+
+# Deploy preview context: all deploys resulting from a pull/merge request
+[context.deploy-preview]
+  command = "echo 'Preview deploys not enabled'"
+  ignore = "true"
