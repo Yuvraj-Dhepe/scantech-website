@@ -17,6 +17,9 @@ const nextConfig: NextConfig = {
     dangerouslyAllowSVG: true,
     contentDispositionType: 'attachment',
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    formats: ['image/avif', 'image/webp'],
+    minimumCacheTTL: 60,
+    disableStaticImages: false,
   },
   eslint: {
     // Warning: This allows production builds to successfully complete even if
