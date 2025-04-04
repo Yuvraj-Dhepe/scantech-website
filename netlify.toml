@@ -1,5 +1,5 @@
 [build]
-  command = "npm install --production=false && npm run build"
+  command = "git lfs fetch --all && git lfs checkout && npm install --production=false && npm run build"
   publish = ".next"
 
 [build.environment]
@@ -15,9 +15,13 @@
 [build.processing.large-media]
   enabled = true
 
+# Enable Git LFS
+[git]
+  lfs_enabled = true
+
 # Production context: all deploys from the main/master branch
 [context.production]
-  command = "npm install --production=false && npm run build"
+  command = "git lfs fetch --all && git lfs checkout && npm install --production=false && npm run build"
   publish = ".next"
 
 # Branch deploy context: all deploys that are not from the production branch
