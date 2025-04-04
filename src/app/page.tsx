@@ -109,12 +109,7 @@ const industries = [
 
 export default function Home() {
   const [activeCategory, setActiveCategory] = useState(0);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    inquiry: ""
-  });
-  const [formSubmitted, setFormSubmitted] = useState(false);
+  // Removed form state variables
   const industriesRef = useRef<HTMLDivElement>(null);
 
   // Auto-advance categories with smooth transitions
@@ -148,26 +143,7 @@ export default function Home() {
     }
   }, []);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // In a real application, you would send the form data to a server
-    console.log("Form submitted:", formData);
-    setFormSubmitted(true);
-    setFormData({ name: "", email: "", inquiry: "" });
-
-    // Reset form submission status after 5 seconds
-    setTimeout(() => {
-      setFormSubmitted(false);
-    }, 5000);
-  };
+  // Removed form handlers
 
   return (
     <>
@@ -378,98 +354,20 @@ export default function Home() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                     </svg>
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-gray-900">Contact Form</h2>
+                  <h2 className="text-2xl md:text-3xl font-bold text-gray-900">Contact Us</h2>
                 </div>
 
-                {formSubmitted ? (
-                  <div className="bg-green-50 border border-green-200 text-green-700 px-6 py-4 rounded-lg mb-6 flex items-center">
-                    <svg className="w-6 h-6 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <span>Thank you for your message! We'll get back to you soon.</span>
-                  </div>
-                ) : (
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="mb-6">
-                      <label htmlFor="name" className="block text-gray-700 font-medium mb-2">
-                        Your Name
-                      </label>
-                      <div className="relative">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                          <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                          </svg>
-                        </div>
-                        <input
-                          type="text"
-                          id="name"
-                          name="name"
-                          value={formData.name}
-                          onChange={handleInputChange}
-                          required
-                          className="w-full pl-10 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-800 placeholder-gray-500 font-medium"
-                          placeholder="Enter your name"
-                        />
-                      </div>
-                    </div>
+                <div className="text-gray-700 mb-8">
+                  <p className="mb-4">We'd love to hear from you! Whether you have a question about our products, need technical support, or want to discuss a custom solution, our team is ready to assist you.</p>
+                  <p>Fill out our detailed contact form to get in touch with our sales and support team.</p>
+                </div>
 
-                    <div className="mb-6">
-                      <label htmlFor="email" className="block text-gray-700 font-medium mb-2">
-                        Email Address
-                      </label>
-                      <div className="relative">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                          <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                          </svg>
-                        </div>
-                        <input
-                          type="email"
-                          id="email"
-                          name="email"
-                          value={formData.email}
-                          onChange={handleInputChange}
-                          required
-                          className="w-full pl-10 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-800 placeholder-gray-500 font-medium"
-                          placeholder="Enter your email"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="mb-6">
-                      <label htmlFor="inquiry" className="block text-gray-700 font-medium mb-2">
-                        Your Inquiry
-                      </label>
-                      <div className="relative">
-                        <div className="absolute top-3 left-0 pl-3 flex items-start pointer-events-none">
-                          <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                          </svg>
-                        </div>
-                        <textarea
-                          id="inquiry"
-                          name="inquiry"
-                          value={formData.inquiry}
-                          onChange={handleInputChange}
-                          required
-                          rows={4}
-                          className="w-full pl-10 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-800 placeholder-gray-500 font-medium"
-                          placeholder="How can we help you?"
-                        ></textarea>
-                      </div>
-                    </div>
-
-                    <button
-                      type="submit"
-                      className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-blue-700 transition-all duration-300 transform hover:scale-[1.02] flex items-center justify-center"
-                    >
-                      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                      </svg>
-                      Send Message
-                    </button>
-                  </form>
-                )}
+                <Link href="/contact" className="block w-full bg-blue-600 text-white py-4 px-6 rounded-lg font-medium hover:bg-blue-700 transition-all duration-300 transform hover:scale-[1.02] flex items-center justify-center">
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                  </svg>
+                  Go to Contact Page
+                </Link>
               </div>
             </div>
 
