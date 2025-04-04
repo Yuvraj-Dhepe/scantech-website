@@ -1,17 +1,18 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  images: {
-    domains: ['scantech.co.in'],
-    remotePatterns: [
-      {
-        protocol: 'http',
-        hostname: 'scantech.co.in',
-        port: '',
-        pathname: '/img/**',
+  // Configure Turbopack for faster development
+  experimental: {
+    turbo: {
+      // Turbopack configuration options
+      resolveAlias: {
+        // Add any module aliases here if needed
       },
-    ],
-    unoptimized: true, // Add this to disable image optimization which can cause issues
+    },
+  },
+  images: {
+    // No need to specify domains for local images in the public directory
+    unoptimized: true, // Disable image optimization which can cause issues
   },
   eslint: {
     // Warning: This allows production builds to successfully complete even if
