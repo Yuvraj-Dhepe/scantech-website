@@ -1,5 +1,5 @@
 [build]
-  command = "npm run build"
+  command = "npm install --production=false && npm run build"
   publish = ".next"
 
 [build.environment]
@@ -17,7 +17,7 @@
 
 # Production context: all deploys from the main/master branch
 [context.production]
-  command = "npm run build"
+  command = "npm install --production=false && npm run build"
   publish = ".next"
 
 # Branch deploy context: all deploys that are not from the production branch
