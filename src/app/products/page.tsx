@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import ImageWithFallback from "@/components/ImageWithFallback";
 import Link from "next/link";
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
@@ -361,7 +362,7 @@ function ProductsContent() {
                   >
                     <div className="p-6 bg-blue-50 flex items-center justify-center h-64 group-hover:bg-blue-100/50 transition-all duration-300">
                       <div className="relative w-48 h-48 flex items-center justify-center">
-                        <Image
+                        <ImageWithFallback
                           src={product.image}
                           alt={product.name}
                           width={180}
@@ -534,7 +535,7 @@ function ProductsContent() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="bg-blue-50 rounded-lg p-6 flex items-center justify-center">
                   <div className="relative w-full h-64 md:h-80">
-                    <Image
+                    <ImageWithFallback
                       src={selectedProduct.image}
                       alt={selectedProduct.name}
                       fill

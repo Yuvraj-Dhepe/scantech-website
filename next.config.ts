@@ -13,6 +13,10 @@ const nextConfig: NextConfig = {
   images: {
     // No need to specify domains for local images in the public directory
     unoptimized: true, // Disable image optimization which can cause issues
+    remotePatterns: [],
+    dangerouslyAllowSVG: true,
+    contentDispositionType: 'attachment',
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   eslint: {
     // Warning: This allows production builds to successfully complete even if
