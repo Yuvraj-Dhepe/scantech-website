@@ -47,7 +47,9 @@ function ContactContent() {
     setSubmitError(null);
 
     try {
+      console.log('Submitting form data:', formData);
       const result = await submitContactForm(formData);
+      console.log('Form submission result:', result);
 
       if (result.success) {
         setFormSubmitted(true);
@@ -65,7 +67,13 @@ function ContactContent() {
           });
         }, 5000);
       } else {
-        setSubmitError(result.error ? result.error.toString() : 'An error occurred while submitting the form');
+        // Handle error with more detailed message
+        const errorMessage = result.error ?
+          (typeof result.error === 'string' ? result.error : JSON.stringify(result.error)) :
+          'An error occurred while submitting the form';
+
+        console.error('Form submission error:', errorMessage);
+        setSubmitError(errorMessage);
       }
     } catch (error) {
       console.error('Error submitting form:', error);

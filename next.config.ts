@@ -11,6 +11,7 @@ const nextConfig: NextConfig = {
         pathname: '/img/**',
       },
     ],
+    unoptimized: true, // Add this to disable image optimization which can cause issues
   },
   eslint: {
     // Warning: This allows production builds to successfully complete even if

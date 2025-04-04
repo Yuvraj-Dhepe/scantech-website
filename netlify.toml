@@ -26,3 +26,35 @@
 [context.deploy-preview]
   command = "echo 'Preview deploys not enabled'"
   ignore = "true"
+
+# Configure headers for large files
+[[headers]]
+  for = "/assets/downloads/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000"
+    Content-Disposition = "attachment"
+
+# Make sure downloads are served as attachments
+[[headers]]
+  for = "/assets/downloads/*.pdf"
+  [headers.values]
+    Content-Type = "application/pdf"
+    Content-Disposition = "attachment"
+
+[[headers]]
+  for = "/assets/downloads/*.jpg"
+  [headers.values]
+    Content-Type = "image/jpeg"
+    Content-Disposition = "attachment"
+
+[[headers]]
+  for = "/assets/downloads/*.exe"
+  [headers.values]
+    Content-Type = "application/octet-stream"
+    Content-Disposition = "attachment"
+
+[[headers]]
+  for = "/assets/downloads/*.rar"
+  [headers.values]
+    Content-Type = "application/x-rar-compressed"
+    Content-Disposition = "attachment"
