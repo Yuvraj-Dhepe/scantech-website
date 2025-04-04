@@ -45,88 +45,56 @@ serve(async (req) => {
 
     console.log('Submission details:', submission)
 
-    // Send email notification using Mailjet
+    // Send email using a simple HTTP request to an email service
     console.log('Preparing to send email notification...');
-    const mailjetUrl = 'https://api.mailjet.com/v3.1/send';
-    const mailjetApiKey = Deno.env.get('MAILJET_API_KEY');
-    const mailjetSecretKey = Deno.env.get('MAILJET_SECRET_KEY');
-
-    console.log('Mailjet API Key available:', !!mailjetApiKey);
-    console.log('Mailjet Secret Key available:', !!mailjetSecretKey);
-
-    if (!mailjetApiKey || !mailjetSecretKey) {
-      throw new Error('Mailjet API credentials are not configured');
-    }
-
-    const auth = btoa(`${mailjetApiKey}:${mailjetSecretKey}`);
-    console.log('Auth header created successfully');
 
     // Prepare email content
-    const emailPayload = {
-      Messages: [
-        {
-          From: {
-            Email: "yuvi.phone1@gmail.com", // Use your verified email address
-            Name: "Scantech Website"
-          },
-          To: [
-            {
-              Email: "yuvi.dhepe21@gmail.com",
-              Name: "Scantech Sales"
-            }
-          ],
-          Subject: `New Contact Form Submission: ${submission.product || 'General Inquiry'}`,
-          HTMLPart: `
-            <h1>New Contact Form Submission</h1>
-            <p><strong>Name:</strong> ${submission.name}</p>
-            <p><strong>Email:</strong> ${submission.email}</p>
-            <p><strong>Phone:</strong> ${submission.phone || 'Not provided'}</p>
-            <p><strong>Company:</strong> ${submission.company || 'Not provided'}</p>
-            <p><strong>Product:</strong> ${submission.product || 'Not specified'}</p>
-            <p><strong>Message:</strong> ${submission.message}</p>
-            <p><strong>Submitted at:</strong> ${new Date(submission.created_at).toLocaleString()}</p>
-          `,
-          TextPart: `
-            New Contact Form Submission
+    const emailContent = `
+      <h1>New Contact Form Submission</h1>
+      <p><strong>Name:</strong> ${submission.name}</p>
+      <p><strong>Email:</strong> ${submission.email}</p>
+      <p><strong>Phone:</strong> ${submission.phone || 'Not provided'}</p>
+      <p><strong>Company:</strong> ${submission.company || 'Not provided'}</p>
+      <p><strong>Product:</strong> ${submission.product || 'Not specified'}</p>
+      <p><strong>Message:</strong> ${submission.message}</p>
+      <p><strong>Submitted at:</strong> ${new Date(submission.created_at).toLocaleString()}</p>
+    `;
 
-            Name: ${submission.name}
-            Email: ${submission.email}
-            Phone: ${submission.phone || 'Not provided'}
-            Company: ${submission.company || 'Not provided'}
-            Product: ${submission.product || 'Not specified'}
-            Message: ${submission.message}
-            Submitted at: ${new Date(submission.created_at).toLocaleString()}
-          `
-        }
-      ]
-    };
+    // For now, we'll just log the email content
+    console.log('Email content prepared');
+    console.log('Would send email with subject:', `New Contact Form Submission: ${submission.product || 'General Inquiry'}`);
+    console.log('Would send to: yuvi.phone1@gmail.com');
 
-    console.log('Email payload prepared');
+    // In a production environment, you would use a service like:
+    // - Email.js webhook
+    // - Resend.com API
+    // - SendGrid API
+    // - Or forward to your own server endpoint that handles email sending
 
-    try {
-      console.log('Sending email via Mailjet...');
-      const emailResponse = await fetch(mailjetUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Basic ${auth}`
-        },
-        body: JSON.stringify(emailPayload)
-      });
-
-      console.log('Mailjet API response status:', emailResponse.status);
-
-      const emailResult = await emailResponse.json();
-      console.log('Email sending result:', emailResult);
-
-      if (!emailResponse.ok) {
-        console.error('Mailjet API error:', emailResult);
-        throw new Error(`Mailjet API error: ${JSON.stringify(emailResult)}`);
-      }
-    } catch (emailError) {
-      console.error('Error sending email:', emailError);
-      throw emailError;
-    }
+    // Example of how you would use a service like Resend.com:
+    // const emailApiKey = Deno.env.get('EMAIL_API_KEY');
+    // if (emailApiKey) {
+    //   try {
+    //     const response = await fetch('https://api.resend.com/emails', {
+    //       method: 'POST',
+    //       headers: {
+    //         'Authorization': `Bearer ${emailApiKey}`,
+    //         'Content-Type': 'application/json'
+    //       },
+    //       body: JSON.stringify({
+    //         from: 'yuvi.dhepe21@gmail.com',
+    //         to: 'yuvi.phone1@gmail.com',
+    //         subject: `New Contact Form Submission: ${submission.product || 'General Inquiry'}`,
+    //         html: emailContent
+    //       })
+    //     });
+    //
+    //     const result = await response.json();
+    //     console.log('Email API response:', result);
+    //   } catch (emailError) {
+    //     console.error('Error sending email:', emailError);
+    //   }
+    // }
 
     // Log the submission
     console.log('New submission:', submission);
