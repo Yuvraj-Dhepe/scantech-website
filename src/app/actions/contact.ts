@@ -1,6 +1,7 @@
 'use server'
 
 import { supabase } from '@/lib/supabase';
+import logger from '@/lib/logger';
 
 export async function submitContactForm(formData: {
   name: string;
@@ -12,28 +13,32 @@ export async function submitContactForm(formData: {
 }) {
   try {
     // Log the Supabase URL and key to verify they're being loaded correctly
-    console.log('Supabase URL:', process.env.NEXT_PUBLIC_SUPABASE_URL);
-    console.log('Using Supabase client');
+    logger.info('Contact form submission started');
+    logger.debug('Supabase URL:', process.env.NEXT_PUBLIC_SUPABASE_URL);
+    logger.debug('Form data:', { ...formData, message: formData.message.substring(0, 20) + '...' });
 
     // Validate form data
     if (!formData.name || !formData.email) {
+      logger.warn('Form validation failed: missing name or email');
       return { success: false, error: 'Name and email are required' };
     }
 
     // Insert into Supabase
-    const { data, error } = await supabase
+    logger.info('Attempting to insert data into Supabase');
+    const { error } = await supabase
       .from('contact_submissions')
       .insert([formData]);
 
     if (error) {
-      console.error('Supabase error:', error);
+      logger.error('Supabase error:', error);
       return { success: false, error: error.message };
     }
 
     // Return success
+    logger.info('Contact form submission successful');
     return { success: true, data: formData };
   } catch (error) {
-    console.error('Error submitting form:', error);
+    logger.error('Unexpected error submitting form:', error);
     return {
       success: false,
       error: error instanceof Error ? error.message : 'An unknown error occurred'

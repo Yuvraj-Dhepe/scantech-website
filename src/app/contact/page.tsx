@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { submitContactForm } from "../actions/contact";
+import logger from "@/lib/logger";
 
 // Content component that uses search params
 function ContactContent() {
@@ -47,11 +48,14 @@ function ContactContent() {
     setSubmitError(null);
 
     try {
-      console.log('Submitting form data:', formData);
+      logger.info('Contact form submission initiated');
+      logger.debug('Submitting form data:', { ...formData, message: formData.message.substring(0, 20) + '...' });
+
       const result = await submitContactForm(formData);
-      console.log('Form submission result:', result);
+      logger.debug('Form submission result:', result);
 
       if (result.success) {
+        logger.info('Contact form submitted successfully');
         setFormSubmitted(true);
 
         // Reset form after 5 seconds
@@ -72,11 +76,12 @@ function ContactContent() {
           (typeof result.error === 'string' ? result.error : JSON.stringify(result.error)) :
           'An error occurred while submitting the form';
 
-        console.error('Form submission error:', errorMessage);
+        logger.error('Form submission error:', errorMessage);
         setSubmitError(errorMessage);
       }
     } catch (error) {
-      console.error('Error submitting form:', error);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      logger.error('Unexpected error submitting form:', errorMessage);
       setSubmitError('An unexpected error occurred. Please try again later.');
     } finally {
       setIsSubmitting(false);
