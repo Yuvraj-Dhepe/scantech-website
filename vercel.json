@@ -1,11 +1,12 @@
 {
-  "buildCommand": "npm run build",
+  "buildCommand": "git lfs fetch --all && git lfs checkout && npm run build",
   "outputDirectory": ".next",
   "framework": "nextjs",
   "git": {
     "deploymentEnabled": {
       "main": true
-    }
+    },
+    "lfs": true
   },
   "headers": [
     {
