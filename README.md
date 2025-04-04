@@ -1,36 +1,101 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Scantech Website
+
+A modern, responsive website for Scantech, a leading provider of Automatic Identification and Data Capture (AIDC) solutions. The website showcases Scantech's products, services, and expertise in barcode solutions, EAS systems, POS systems, handheld inkjet printers, and consumables.
+
+## Features
+
+- **Product Catalog**: Browse through various product categories and subcategories
+  - Barcode Solutions (Printers & Scanners)
+  - EAS Systems
+  - POS Systems (Windows, Android, Thermal Printers, Waiter Calling System)
+  - Handheld Inkjet Printer
+  - Consumables (Labels & Ribbons)
+- **Product Search**: Search functionality across all product categories
+- **Responsive Design**: Optimized for all device sizes with modern UI elements
+- **Contact Form**: Integrated contact form with product inquiry capability
+- **E-Waste Management**: Information about responsible electronic waste disposal
+- **About Us**: Company information and industries served
+
+## Technologies Used
+
+- **Next.js 15**: React framework with App Router
+- **React 19**: UI library
+- **TypeScript**: Type-safe JavaScript
+- **Tailwind CSS**: Utility-first CSS framework
+- **ESLint**: Code linting
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js (version 18.18.0 or higher)
+- npm, yarn, pnpm, or bun
+
+### Installation
+
+```bash
+# Clone the repository
+git clone <repository-url>
+cd scantech-website
+
+# Install dependencies
+npm install
+```
+
+### Development
+
+Run the development server with Turbopack:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+```
 
-## Learn More
+### Start Production Server
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run start
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+scantech-website/
+├── public/            # Static assets
+│   ├── images/        # Image files
+│   └── assets/        # Other assets (downloads, brochures, etc.)
+├── src/
+│   ├── app/           # Next.js App Router
+│   │   ├── about/     # About page
+│   │   ├── contact/   # Contact page
+│   │   ├── e-waste-management/ # E-waste management pages
+│   │   ├── products/  # Products page
+│   │   ├── layout.tsx # Root layout
+│   │   ├── page.tsx   # Home page
+│   │   └── globals.css # Global styles
+│   └── data/          # Data files
+│       └── products/  # Product data
+├── .next/             # Next.js build output (gitignored)
+├── next.config.ts     # Next.js configuration
+├── postcss.config.mjs # PostCSS configuration
+├── tailwind.config.js # Tailwind CSS configuration
+└── tsconfig.json      # TypeScript configuration
+```
 
-## Deploy on Vercel
+## Contact
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Scantech India
+Flat No:202, Sai Krishna's Sai Ram Residency,
+S.R.Nagar, Hyderabad-500038
+Phone: +91 9392455260
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+
+Private - All Rights Reserved
