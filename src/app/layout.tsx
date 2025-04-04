@@ -171,6 +171,9 @@ export default function RootLayout({
                 <Link href="/contact" className="px-4 py-2 rounded-full text-gray-800 hover:text-white hover:bg-blue-600 font-medium transition-all duration-300">
                   Contact Us
                 </Link>
+                <Link href="/e-waste-management" className="px-4 py-2 rounded-full text-gray-800 hover:text-white hover:bg-green-600 font-medium transition-all duration-300">
+                  E-Waste Management
+                </Link>
               </nav>
 
               <button
@@ -242,6 +245,13 @@ export default function RootLayout({
                   >
                     Contact Us
                   </Link>
+                  <Link
+                    href="/e-waste-management"
+                    className="block py-2 my-1 px-4 rounded-full text-gray-800 hover:text-white hover:bg-green-600 transition-all duration-300"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    E-Waste Management
+                  </Link>
                 </div>
               </div>
             )}
@@ -294,6 +304,11 @@ export default function RootLayout({
                   <li>
                     <Link href="/contact" className="text-gray-300 hover:text-white transition">
                       Contact Us
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/e-waste-management" className="text-gray-300 hover:text-white transition">
+                      E-Waste Management
                     </Link>
                   </li>
                 </ul>
