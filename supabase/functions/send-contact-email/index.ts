@@ -56,12 +56,12 @@ serve(async (req) => {
         Messages: [
           {
             From: {
-              Email: "notifications@yourdomain.com", // Replace with your verified sender email
+              Email: "yuvi.phone1@gmail.com", // Use your verified email address
               Name: "Scantech Website"
             },
             To: [
               {
-                Email: "Sales@scantech.co.in",
+                Email: "yuvi.dhepe21@gmail.com",
                 Name: "Scantech Sales"
               }
             ],
