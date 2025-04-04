@@ -64,6 +64,40 @@ npm run build
 npm run start
 ```
 
+## Deployment
+
+### Deploying to Vercel
+
+This project is configured for deployment on Vercel, which provides excellent support for Next.js and Git LFS.
+
+1. **Create a Vercel Account**:
+   - Go to [vercel.com](https://vercel.com/)
+   - Sign up with your GitHub account
+
+2. **Import Your Repository**:
+   - From the Vercel dashboard, click "Add New..."
+   - Select "Project"
+   - Choose your GitHub repository
+
+3. **Configure Project**:
+   - Framework Preset: Next.js
+   - Build Command: `npm run build`
+   - Output Directory: `.next`
+   - Install Command: `npm install`
+
+4. **Environment Variables**:
+   - Add all the environment variables from your `.env.local` file
+   - Required variables are documented in `.env.example`
+
+5. **Deploy**:
+   - Click "Deploy"
+   - Vercel will build and deploy your site
+
+6. **Custom Domain** (Optional):
+   - In your project settings, go to "Domains"
+   - Add your custom domain
+   - Follow the instructions to configure DNS
+
 ## Project Structure
 
 ```
