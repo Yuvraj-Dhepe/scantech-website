@@ -19,11 +19,11 @@ export default function CollectionPointsPage() {
   const [cityFilter, setCityFilter] = useState("");
   const [contactPersonFilter, setContactPersonFilter] = useState("");
   const [contactNumberFilter, setContactNumberFilter] = useState("");
-  
+
   // State for sorting
   const [sortField, setSortField] = useState<SortField>("");
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>("asc");
-  
+
   // Collection points data
   const collectionPoints: CollectionPoint[] = [
     { state: "Andhra Pradesh", city: "Vishakhapatnam", address: "TCI EXPRESS LIMITED, C/o-TRANSPORT HOUSE JAIL ROAD OPP JUDGE COURT BESIDE CMR SHOPPING MALL, VISHAKHAPATNAM – 530020", contactPerson: "Vikram", contactNumber: "8912513411" },
@@ -52,7 +52,7 @@ export default function CollectionPointsPage() {
     { state: "Uttaranchal", city: "Haridwar", address: "TCI EXPRESS LIMITED, G-01/03 AND 04 TRANSPORT NAGAR VILLAGE- SARAI NEAR SABJI MANDI JWALAPUR. HARIDWAR – 249404", contactPerson: "Pankaj Kumar", contactNumber: "7570004570" },
     { state: "West Bengal", city: "Kolkata", address: "TCI EXPRESS LIMITED, PLOT NO-3A, MAHENDRALOY LANE, MARUTI BAGAN NEAR MS MOTOR TOPSIA KOLKATA – 700046", contactPerson: "Vismay", contactNumber: "8336937705" }
   ];
-  
+
   // Function to handle sorting
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -64,7 +64,7 @@ export default function CollectionPointsPage() {
       setSortDirection("asc");
     }
   };
-  
+
   // Filter and sort the collection points
   const filteredPoints = collectionPoints
     .filter(point => {
@@ -77,17 +77,17 @@ export default function CollectionPointsPage() {
     })
     .sort((a, b) => {
       if (!sortField) return 0;
-      
+
       const aValue = a[sortField];
       const bValue = b[sortField];
-      
+
       if (sortDirection === "asc") {
         return aValue.localeCompare(bValue);
       } else {
         return bValue.localeCompare(aValue);
       }
     });
-    
+
   // Get sort icon based on current sort state
   const getSortIcon = (field: SortField) => {
     if (sortField !== field) {
@@ -141,7 +141,7 @@ export default function CollectionPointsPage() {
                 <div className="absolute bottom-0 left-0 w-full h-1 bg-green-500 rounded-full"></div>
               </span>
             </h2>
-            
+
             <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 mb-10">
               <div className="p-8">
                 <div className="prose prose-lg max-w-none text-gray-600 mb-8">
@@ -149,55 +149,59 @@ export default function CollectionPointsPage() {
                     We have partnered with TCI EXPRESS LIMITED for the collection of e-waste. You can drop off your e-waste at any of the following collection centers:
                   </p>
                 </div>
-                
+
                 {/* Search Filters */}
                 <div className="mb-6 grid grid-cols-1 md:grid-cols-4 gap-4">
                   <div>
-                    <label htmlFor="stateFilter" className="block text-sm font-medium text-gray-700 mb-1">Filter by State/UT</label>
+                    <label htmlFor="stateFilter" className="block text-sm font-semibold text-gray-700 mb-1">Filter by State/UT</label>
                     <input
                       type="text"
                       id="stateFilter"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                      className="w-full px-3 py-2 border border-green-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 placeholder-gray-500"
+                      style={{ color: '#000', fontWeight: 500 }}
                       placeholder="Search state..."
                       value={stateFilter}
                       onChange={(e) => setStateFilter(e.target.value)}
                     />
                   </div>
                   <div>
-                    <label htmlFor="cityFilter" className="block text-sm font-medium text-gray-700 mb-1">Filter by City</label>
+                    <label htmlFor="cityFilter" className="block text-sm font-semibold text-gray-700 mb-1">Filter by City</label>
                     <input
                       type="text"
                       id="cityFilter"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                      className="w-full px-3 py-2 border border-blue-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500"
+                      style={{ color: '#000', fontWeight: 500 }}
                       placeholder="Search city..."
                       value={cityFilter}
                       onChange={(e) => setCityFilter(e.target.value)}
                     />
                   </div>
                   <div>
-                    <label htmlFor="contactPersonFilter" className="block text-sm font-medium text-gray-700 mb-1">Filter by Contact Person</label>
+                    <label htmlFor="contactPersonFilter" className="block text-sm font-semibold text-gray-700 mb-1">Filter by Contact Person</label>
                     <input
                       type="text"
                       id="contactPersonFilter"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                      className="w-full px-3 py-2 border border-purple-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 placeholder-gray-500"
+                      style={{ color: '#000', fontWeight: 500 }}
                       placeholder="Search contact person..."
                       value={contactPersonFilter}
                       onChange={(e) => setContactPersonFilter(e.target.value)}
                     />
                   </div>
                   <div>
-                    <label htmlFor="contactNumberFilter" className="block text-sm font-medium text-gray-700 mb-1">Filter by Contact Number</label>
+                    <label htmlFor="contactNumberFilter" className="block text-sm font-semibold text-gray-700 mb-1">Filter by Contact Number</label>
                     <input
                       type="text"
                       id="contactNumberFilter"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                      className="w-full px-3 py-2 border border-orange-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 placeholder-gray-500"
+                      style={{ color: '#000', fontWeight: 500 }}
                       placeholder="Search contact number..."
                       value={contactNumberFilter}
                       onChange={(e) => setContactNumberFilter(e.target.value)}
                     />
                   </div>
                 </div>
-                
+
                 <div className="overflow-x-auto">
                   <table className="min-w-full bg-white border border-gray-200 rounded-lg overflow-hidden shadow-lg">
                     <thead className="bg-gradient-to-r from-green-700 to-green-600 text-white">
@@ -271,18 +275,18 @@ export default function CollectionPointsPage() {
                     </tbody>
                   </table>
                 </div>
-                
+
                 <div className="mt-8 flex flex-col md:flex-row justify-between items-center gap-4">
                   <p className="italic text-sm text-gray-600">
                     Note: Please call the respective collection center before visiting to confirm operating hours and availability.
                   </p>
-                  <div className="text-sm text-gray-600 bg-gray-100 px-3 py-1 rounded-full">
-                    Showing <span className="font-semibold">{filteredPoints.length}</span> of <span className="font-semibold">{collectionPoints.length}</span> collection points
+                  <div className="text-sm text-gray-700 bg-gray-100 px-4 py-2 rounded-full shadow-sm border border-gray-200">
+                    Showing <span className="font-bold text-green-700">{filteredPoints.length}</span> of <span className="font-bold text-green-700">{collectionPoints.length}</span> collection points
                   </div>
                 </div>
               </div>
             </div>
-            
+
             <div className="bg-green-600 text-white rounded-xl p-8 shadow-lg">
               <div className="flex items-center mb-4">
                 <svg className="w-10 h-10 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -297,7 +301,7 @@ export default function CollectionPointsPage() {
                 Together, we can make a difference in reducing electronic waste and protecting our environment for future generations.
               </p>
             </div>
-            
+
             {/* Navigation */}
             <div className="mt-12 flex flex-wrap justify-between items-center">
               <Link href="/e-waste-management/dos-and-donts" className="inline-flex items-center text-gray-600 hover:text-green-600 transition-colors">
