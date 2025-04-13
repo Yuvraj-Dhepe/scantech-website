@@ -1,6 +1,6 @@
-# Scantech Website
+# Website Creation
 
-A modern, responsive website for Scantech, a leading provider of Automatic Identification and Data Capture (AIDC) solutions. The website showcases Scantech's products, services, and expertise in barcode solutions, EAS systems, POS systems, handheld inkjet printers, and consumables.
+A modern, responsive website for Scantech, a leading provider of Automatic Identification and Data Capture (AIDC) solutions. The website showcases Barcode products, services, and expertise in barcode solutions, EAS systems, POS systems, handheld inkjet printers, and consumables.
 
 ## Features
 
@@ -122,13 +122,6 @@ scantech-website/
 ├── tailwind.config.js # Tailwind CSS configuration
 └── tsconfig.json      # TypeScript configuration
 ```
-
-## Contact
-
-Scantech India
-Flat No:202, Sai Krishna's Sai Ram Residency,
-S.R.Nagar, Hyderabad-500038
-Phone: +91 9392455260
 
 ## License
 
