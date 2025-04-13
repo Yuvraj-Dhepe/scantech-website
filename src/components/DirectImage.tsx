@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { grayPlaceholder } from '@/utils/placeholderImage';
+import { transparentPixel } from '@/utils/placeholderImage';
 
 interface DirectImageProps {
   src: string;
@@ -18,11 +18,15 @@ const DirectImage = ({
   className = '',
   style = {},
 }: DirectImageProps) => {
-  const [imgSrc, setImgSrc] = useState<string>(grayPlaceholder);
+  const [imgSrc, setImgSrc] = useState<string>('');
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
 
   useEffect(() => {
+    // Reset states when src changes
+    setLoaded(false);
+    setError(false);
+
     // Set the actual image source after component mount
     if (src) {
       setImgSrc(src);
@@ -30,12 +34,13 @@ const DirectImage = ({
   }, [src]);
 
   return (
-    <div 
-      style={{ 
+    <div
+      style={{
         position: 'relative',
         width: width || '100%',
         height: height || 'auto',
         overflow: 'hidden',
+        backgroundColor: '#f0f0f0',
         ...style
       }}
       className={className}
@@ -48,7 +53,6 @@ const DirectImage = ({
             left: 0,
             right: 0,
             bottom: 0,
-            backgroundColor: '#f0f0f0',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -59,23 +63,26 @@ const DirectImage = ({
           {alt || 'Loading...'}
         </div>
       )}
-      <img
-        src={error ? grayPlaceholder : imgSrc}
-        alt={alt || ''}
-        style={{
-          width: '100%',
-          height: '100%',
-          objectFit: 'contain',
-          opacity: loaded ? 1 : 0,
-          transition: 'opacity 0.3s ease-in-out',
-        }}
-        onLoad={() => setLoaded(true)}
-        onError={() => {
-          console.error(`Failed to load image: ${imgSrc}`);
-          setError(true);
-          setImgSrc(grayPlaceholder);
-        }}
-      />
+      {imgSrc && (
+        <img
+          src={imgSrc}
+          alt={alt || ''}
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'contain',
+            opacity: loaded ? 1 : 0,
+            transition: 'opacity 0.3s ease-in-out',
+          }}
+          onLoad={() => setLoaded(true)}
+          onError={(e) => {
+            console.error(`Failed to load image: ${imgSrc}`);
+            setError(true);
+            // Use a simple transparent pixel instead of a complex base64 image
+            (e.target as HTMLImageElement).src = transparentPixel;
+          }}
+        />
+      )}
     </div>
   );
 };

@@ -224,16 +224,15 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Category indicators */}
+            {/* Category indicators (non-clickable) */}
             <div className="flex justify-center gap-3 mt-8">
               {productCategories.map((category, index) => (
-                <button
+                <div
                   key={index}
-                  onClick={() => setActiveCategory(index)}
                   className={`h-3 rounded-full transition-all duration-500 ${
-                    index === activeCategory ? "bg-white w-10" : "bg-white/50 w-3 hover:bg-white/80"
-                  } ${index === activeCategory ? "group-hover:bg-purple-400 group-hover:w-10" : "group-hover:bg-purple-300/50 group-hover:w-3 hover:group-hover:bg-purple-300/80"}`}
-                  aria-label={`View ${category.title}`}
+                    index === activeCategory ? "bg-white w-10" : "bg-white/50 w-3"
+                  } ${index === activeCategory ? "group-hover:bg-purple-400 group-hover:w-10" : "group-hover:bg-purple-300/50 group-hover:w-3"}`}
+                  aria-label={`Category indicator ${index + 1}`}
                 />
               ))}
             </div>
