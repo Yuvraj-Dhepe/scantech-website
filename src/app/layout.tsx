@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState, useRef } from "react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 // Main product categories for dropdown menu
@@ -98,6 +99,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} antialiased min-h-screen flex flex-col`}>
+        <SpeedInsights />
         <header className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white/95 backdrop-blur-sm shadow-md py-2' : 'bg-gradient-to-r from-blue-600/90 to-blue-800/90 backdrop-blur-sm py-4'}`}>
           <div className="container mx-auto px-4">
             <div className={`rounded-full transition-all duration-300 flex justify-between items-center ${scrolled ? 'bg-blue-50/90 backdrop-blur-sm shadow-lg px-6 py-2' : 'bg-white/95 backdrop-blur-sm shadow-md px-6 py-3'}`}>
